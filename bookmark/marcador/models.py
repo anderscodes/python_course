@@ -15,7 +15,7 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-class PublicBookmarkManager(models.Manger):
+class PublicBookmarkManager(models.Manager):
     def get_queryset(self):
         qs = super(PublicBookmarkManager, self).get_queryset()
         return qs.filter(is_public=True)
