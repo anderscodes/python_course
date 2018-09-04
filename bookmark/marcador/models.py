@@ -15,6 +15,11 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class PublicBookmarkManager(models.Manger):
+    def get_queryset(self):
+        qs = super(PublicBookmarkManager, self).get_queryset()
+        return qs.filter(is_public=True)
+
 @python_2_unicode_compatible
 class Bookmark(models.Model):
     url = models.URLField()
@@ -25,6 +30,9 @@ class Bookmark(models.Model):
     date_updated = models.DateTimeField('date updated')
     owner = models.ForeignKey(User, verbose_name='owner', related_name='bookmarks')
     tags = models.ManyToManyField(Tag, blank=True)
+
+    objects = models.Manager()
+    public = PublicBookmarkManager()
 
     class Meta:
         verbose_name = 'bookmark'
